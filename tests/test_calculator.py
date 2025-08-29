@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from calculator import add, subtract, multiply, divide
 import pytest
 
@@ -12,6 +16,6 @@ def test_multiply():
 
 def test_divide():
     assert divide(10, 2) == 5
-    import pytest
     with pytest.raises(ValueError):
         divide(5, 0)
+
