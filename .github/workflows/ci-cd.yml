@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  build-test-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,5 +25,19 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run Tests
+      run: PYTHONPATH=. pytest
+
+    - name: Deploy (Simulation)
+      if: success()
       run: |
-        pytest
+        echo "🎉 All tests passed! Deploying app..."
+        mkdir deployment
+        cp calculator.py deployment/
+        echo "✅ App deployed to /deployment folder"
+
+    - name: Upload Deployed App
+      uses: actions/upload-artifact@v4
+      with:
+        name: cal-app
+        path: deployment/
+
